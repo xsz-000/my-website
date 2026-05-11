@@ -1,1 +1,1 @@
-console.log("网站加载成功");
+console.log("网站运行正常");
