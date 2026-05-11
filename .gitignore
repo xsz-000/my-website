@@ -1,7 +1,7 @@
 node_modules/
-.DS_Store
-*.log
+node_modules/
 dist/
 build/
-.vscode/
-.idea/
+.wrangler/
+.DS_Store
+*.log
