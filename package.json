@@ -1,8 +1,0 @@
-{
-  "name": "auto-deploy-site",
-  "version": "1.0.0",
-  "main": "auto-push.js",
-  "scripts": {
-    "watch": "node auto-push.js"
-  }
-}
