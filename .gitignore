@@ -1,5 +1,14 @@
-node_modules
-.wrangler
-dist
-build
+# dependencies
+node_modules/
+
+# build / cloudflare
+.wrangler/
+dist/
+build/
+
+# system
 .DS_Store
+Thumbs.db
+
+# editor
+.vscode/
