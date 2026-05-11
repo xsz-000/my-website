@@ -1,55 +1,34 @@
-const chokidar = require("chokidar");
-const { exec } = require("child_process");
+const { execSync } = require("child_process");
+const fs = require("fs");
 
-console.log("馃殌 Auto CI running...");
-
-const run = (cmd) =>
-  new Promise((resolve) => {
-    exec(cmd, (err, stdout, stderr) => {
-
-      if (err) {
-        console.log(err.message);
-      }
-
-      if (stdout) {
-        console.log(stdout);
-      }
-
-      if (stderr) {
-        console.log(stderr);
-      }
-
-      resolve();
-    });
-  });
+console.log("?? 全自动监听启动...");
 
 let timer = null;
 
-chokidar
-  .watch(".", {
-    ignored: ["**/.git/**", "**/node_modules/**"],
-    ignoreInitial: true,
-  })
+// 防抖（避免疯狂提交）
+function commitAndPush() {
+  try {
+    execSync("git add .");
 
-  .on("change", (path) => {
+    const time = new Date().toLocaleString();
+    execSync(`git commit -m "auto update ${time}"`);
 
-    console.log("馃摝 File changed:", path);
+    execSync("git push");
 
-    clearTimeout(timer);
+    console.log("? 已自动推送 Cloudflare");
+  } catch (e) {
+    console.log("?? 没有变化或提交失败");
+  }
+}
 
-    timer = setTimeout(async () => {
+fs.watch(".", { recursive: true }, (event, file) => {
+  if (!file) return;
+  if (file.includes(".git")) return;
 
-      console.log("馃攧 Auto syncing...");
+  clearTimeout(timer);
 
-      await run("git add .");
-
-      await run(
-        'git diff --cached --quiet || git commit -m "auto update"'
-      );
-
-      await run("git push");
-
-      console.log("鉁?Pushed 鈫?GitHub 鈫?Cloudflare");
-
-    }, 2000);
-  });
+  timer = setTimeout(() => {
+    console.log("?? 检测到变化:", file);
+    commitAndPush();
+  }, 2000); // 2秒防抖
+});
