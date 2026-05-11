@@ -1,14 +1,7 @@
-# dependencies
 node_modules/
-
-# build / cloudflare
-.wrangler/
+.DS_Store
+*.log
 dist/
 build/
-
-# system
-.DS_Store
-Thumbs.db
-
-# editor
 .vscode/
+.idea/
