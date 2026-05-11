@@ -1,8 +1,7 @@
 {
-  "name": "auto-deploy-site",
-  "version": "1.0.0",
-  "main": "auto-push.js",
-  "scripts": {
-    "watch": "node auto-push.js"
+  "name": "my-website",
+  "compatibility_date": "2026-05-11",
+  "assets": {
+    "directory": "./public"
   }
 }
